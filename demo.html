@@ -31,7 +31,9 @@
         $list.append('<li data-position="'+ i +'" style="left:'+ left +'">'+ v +'</li>');
       });
       
-      callback && callback();
+      setTimeout(function(){
+        callback && callback();
+      }, 2000);
     }
 
     function paixu(n){
