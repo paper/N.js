@@ -4,6 +4,7 @@
 
 
 ## 说明
+
 有时候，我们需要延迟处理数据
 
 比如写一个数组排序的动画，如果直接写，会比较麻烦。
@@ -13,8 +14,16 @@
 
 
 ## Demo
+
 **N.js** 实现的一个简单排序动画的例子 [Demo](http://htmlpreview.github.io/?https://github.com/paper/N.js/blob/master/demo.html) [请使用 Firefox 或 chrome 进行查看]
 
 大家可以参考这个例子，延伸自己所需要的场合
 
+## Changelog
+
+#####1.1.0
+1. 添加了 @walkOver，可以判断数据是否 “走” 完了
+
+#####1.0.0
+1. N.js 最初版本
 

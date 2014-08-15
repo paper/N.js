@@ -67,10 +67,12 @@
     @callback   每一步处理细节的回调函数
       @v        get 收集起来的值
       @walkKey  里面的key值，如果设置为true，表示可以走下一步
+      @walkOver 判断是否结束，如果结束为true
   ----------------------------------------------*/
   N.prototype.walk = function(walkSpeed, callback){
     var self = this;
     
+    var walkOver = false;
     var walkKey = {};
     
     //判断是否走一步的帧数
@@ -86,15 +88,15 @@
     function walkIn(){
       walkKey = { key : false };
       
-      if( self.len() === 0 ){
-        clearInterval( fpsInterval );
-        return;
-      }
-
       setTimeout(function(){
         // 如果报错，得停下来
         try{
-          callback( self.next() , walkKey);
+          if( self.len() === 0 ){
+            clearInterval( fpsInterval );
+            walkOver = true;
+          }
+          
+          callback( self.next(), walkKey, walkOver);
         }catch(e){
           clearInterval( fpsInterval );
         }

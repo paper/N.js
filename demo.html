@@ -10,7 +10,7 @@
 <body>
   
   <div id="wrap">
-    <h1>请打开调试工具看调试信息</h1>
+    <h1>请打开 调试工具 查看 调试信息</h1>
     
     <ul class="list" id="J-list"></ul>
   </div>
@@ -35,8 +35,9 @@
         callback && callback();
       }, 2000);
     }
-
-    function paixu(n){
+    
+    // 排序
+    function sortArr(n){
       for(var i=0; i<len; i++){
         for(var j = i+1; j< len; j++){
           n.get(function(){
@@ -52,48 +53,56 @@
       }
     }
     
-    createDOM(function(){
-      // 你也可以这样：
-      // var N2 = N.noConflict();
-      // var n = N2();
-      var n = N();
+    $(window).load(function(){
       
-      paixu(n);
-      
-      // 每走完一个动画，“休息” 500ms
-      n.walk(500, function(v, walkKey){
-        var i = v.i;
-        var j = v.j;
+      createDOM(function(){
+        // 你也可以这样：
+        // var N2 = N.noConflict();
+        // var n = N2();
+        var n = N();
         
-        console.log("位置%d 和 位置%d 互换", i, j);
+        sortArr(n);
         
-        var $i_elem = $(".list li[data-position="+ i +"]");
-        var $j_elem = $(".list li[data-position="+ j +"]");
-        
-        var i_elem_left = $i_elem.css("left");
-        var j_elem_left = $j_elem.css("left");
-        
-        $i_elem.addClass("active");
-        $j_elem.addClass("active");
-        
-        $i_elem.animate({
-          left : j_elem_left
-        }, "slow", function(){
-          walkKey.key = true;
-          $i_elem.removeClass("active");
+        // 每走完一个动画，“休息” 500ms
+        n.walk(500, function(v, walkKey, walkOver){
+          if( walkOver === true ){
+            console.log("排序结束");
+            return;
+          }
+          
+          var i = v.i;
+          var j = v.j;
+          
+          console.log("位置%d 和 位置%d 互换", i, j);
+          
+          var $i_elem = $(".list li[data-position="+ i +"]");
+          var $j_elem = $(".list li[data-position="+ j +"]");
+          
+          var i_elem_left = $i_elem.css("left");
+          var j_elem_left = $j_elem.css("left");
+          
+          $i_elem.addClass("active");
+          $j_elem.addClass("active");
+          
+          $i_elem.animate({
+            left : j_elem_left
+          }, "slow", function(){
+            walkKey.key = true;
+            $i_elem.removeClass("active");
+          });
+          
+          $j_elem.animate({
+            left : i_elem_left
+          }, "slow", function(){
+            $j_elem.removeClass("active");
+          });
+          
+          $i_elem.attr("data-position", j);
+          $j_elem.attr("data-position", i);
         });
-        
-        $j_elem.animate({
-          left : i_elem_left
-        }, "slow", function(){
-          $j_elem.removeClass("active");
-        });
-        
-        $i_elem.attr("data-position", j);
-        $j_elem.attr("data-position", i);
       });
+      
     });
-    
     
   </script>
 </body>
