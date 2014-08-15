@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+*{margin0;padding:0;}
+ul,ol,li{list-style:none;}
+
+#wrap{margin:30px;}
+h1{margin-bottom:50px; color:#999;}
+.list{
+  position:relative;
+}
+.list li{
+  position:absolute;
+  width:50px;
+  height:50px;
+  line-height:50px;
+  font-size:24px;
+  background-color:#5774B0;
+  color:#fff;
+  text-align:center;
+  left:0;
+  top:0;
+}
+
+.list li.active{
+  background-color:#92B439;
+}

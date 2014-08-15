@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>N.js Demo</title>
+  <link rel="stylesheet" href="demo.css">
+  <script src="N.js"></script>
+  <script src="jquery-2.1.1.min.js"></script>
+</head>
+<body>
+  
+  <div id="wrap">
+    <h1>请打开调试工具看调试信息</h1>
+    
+    <ul class="list" id="J-list"></ul>
+  </div>
+  
+  <script>
+    // 排序动画
+    
+    //从小到大排序，每次都确定最小的在左边
+    var r = [1,10,7,2,4,8,5,6,3,9];
+    var len = r.length;
+    
+    // 动态生成DOM
+    function createDOM(callback){
+      var $list = $("#J-list");
+      
+      r.forEach(function(v, i){
+        var left = 60*i + "px";
+        $list.append('<li data-position="'+ i +'" style="left:'+ left +'">'+ v +'</li>');
+      });
+      
+      callback && callback();
+    }
+
+    function paixu(n){
+      for(var i=0; i<len; i++){
+        for(var j = i+1; j< len; j++){
+          n.get(function(){
+            if( r[i] > r[j] ){
+              var temp = r[j];
+              r[j] = r[i];
+              r[i] = temp;
+              
+              return {i:i, j:j};
+            }
+          });
+        }
+      }
+    }
+    
+    createDOM(function(){
+      // 你也可以这样：
+      // var N2 = N.noConflict();
+      // var n = N2();
+      var n = N();
+      
+      paixu(n);
+      
+      // 每走完一个动画，“休息” 500ms
+      n.walk(500, function(v, walkKey){
+        var i = v.i;
+        var j = v.j;
+        
+        console.log("位置%d 和 位置%d 互换", i, j);
+        
+        var $i_elem = $(".list li[data-position="+ i +"]");
+        var $j_elem = $(".list li[data-position="+ j +"]");
+        
+        var i_elem_left = $i_elem.css("left");
+        var j_elem_left = $j_elem.css("left");
+        
+        $i_elem.addClass("active");
+        $j_elem.addClass("active");
+        
+        $i_elem.animate({
+          left : j_elem_left
+        }, "slow", function(){
+          walkKey.key = true;
+          $i_elem.removeClass("active");
+        });
+        
+        $j_elem.animate({
+          left : i_elem_left
+        }, "slow", function(){
+          $j_elem.removeClass("active");
+        });
+        
+        $i_elem.attr("data-position", j);
+        $j_elem.attr("data-position", i);
+      });
+    });
+    
+    
+  </script>
+</body>
+</html>
