@@ -89,13 +89,12 @@
           }, "slow", function(){
             walkKey.key = true;
             $i_elem.removeClass("active");
+            $j_elem.removeClass("active");
           });
           
           $j_elem.animate({
             left : i_elem_left
-          }, "slow", function(){
-            $j_elem.removeClass("active");
-          });
+          }, "slow");
           
           $i_elem.attr("data-position", j);
           $j_elem.attr("data-position", i);
