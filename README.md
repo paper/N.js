@@ -15,7 +15,7 @@
 
 ## Demo
 
-**N.js** 实现的一个简单排序动画的例子 [Demo](http://htmlpreview.github.io/?https://github.com/paper/N.js/blob/master/demo.html) [请使用 Firefox 或 chrome 进行查看]
+**N.js** 实现的一个简单排序动画的例子 [Demo](http://paper.github.io/N.js/demo.html) [请使用 Firefox 或 chrome 进行查看]
 
 大家可以参考这个例子，延伸自己所需要的场合
 
