@@ -33,7 +33,7 @@
       
       setTimeout(function(){
         callback && callback();
-      }, 2000);
+      }, 1000);
     }
     
     // 排序
@@ -64,7 +64,8 @@
         sortArr(n);
         
         // 每走完一个动画，“休息” 500ms
-        n.walk(500, function(v, walkKey, walkOver){
+        n.walk(500, function(v, walkNext, walkOver){
+          // 结束
           if( walkOver === true ){
             console.log("排序结束");
             return;
@@ -87,7 +88,9 @@
           $i_elem.animate({
             left : j_elem_left
           }, "slow", function(){
-            walkKey.key = true;
+            //走下一步
+            walkNext();
+            
             $i_elem.removeClass("active");
             $j_elem.removeClass("active");
           });

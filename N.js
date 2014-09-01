@@ -2,7 +2,7 @@
   N.js
 
   Author   paper
-  Date     2014-08
+  Date     2014-09
   Site     https://github.com/paper
   
   Intro    先进先出原则
@@ -66,51 +66,32 @@
     
     @callback   每一步处理细节的回调函数
       @v        get 收集起来的值
-      @walkKey  里面的key值，如果设置为true，表示可以走下一步
+      @walkNext 下一步回调函数
       @walkOver 判断是否结束，如果结束为true
   ----------------------------------------------*/
   N.prototype.walk = function(walkSpeed, callback){
     var self = this;
-    
     var walkOver = false;
-    var walkKey = {};
-    
-    //判断是否走一步的帧数
-    var fps = 30;
-    var fpsTime = parseInt( 1000/fps, 10);
-    var fpsInterval = null;
-    
+
     if( arguments.length == 1 ){
       callback = walkSpeed;
       walkSpeed = 1;
     }
     
-    function walkIn(){
-      walkKey = { key : false };
-      
+    function walkNext(){
+    
       setTimeout(function(){
-        // 如果报错，得停下来
-        try{
-          if( self.len() === 0 ){
-            clearInterval( fpsInterval );
-            walkOver = true;
-          }
-          
-          callback( self.next(), walkKey, walkOver);
-        }catch(e){
-          clearInterval( fpsInterval );
+      
+        if( self.len() === 0 ){
+          walkOver = true;
         }
+          
+        callback( self.next(), walkNext, walkOver);
       }, walkSpeed);
       
-    }//end walkIn
-
-    fpsInterval = setInterval(function(){
-      if( walkKey.key === true){
-        walkIn();
-      }
-    }, fpsTime);
+    }//end walkNext
     
-    walkIn();
+    walkNext();
   }
   
   // 可以改名，避免命名冲突
